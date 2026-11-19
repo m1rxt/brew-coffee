@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Brew Coffee — Кофейня и каталог</title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <div>
+        <span class="eyebrow">SPECIALTY ROASTERY</span>
+        <h1>Brew Coffee</h1>
+      </div>
+      <div class="topbar-actions">
+        <button id="open-add-modal-btn" class="secondary-btn" type="button">
+          + Добавить товар
+        </button>
+        <button id="open-orders-modal-btn" class="secondary-btn" type="button">
+          Заказы
+        </button>
+        <button id="open-cart-btn" class="cart-btn" type="button">
+          Корзина (<span id="cart-count">0</span>)
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="controls">
+      <input
+        id="search"
+        type="search"
+        placeholder="Поиск по названию или вкусу..."
+        aria-label="Поиск"
+      />
+      <select id="category" aria-label="Категория">
+        <option value="">Все категории</option>
+      </select>
+      <select id="sort" aria-label="Сортировка">
+        <option value="">Сначала новинки</option>
+        <option value="price_asc">Сначала дешевле</option>
+        <option value="price_desc">Сначала дороже</option>
+        <option value="name_asc">По названию (А–Я)</option>
+      </select>
+    </section>
+
+    <section id="products" class="products-grid" aria-live="polite"></section>
+  </main>
+
+  <!-- Модальное окно добавления товара -->
+  <div id="add-product-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="add-modal-title">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h2 id="add-modal-title">Новый товар</h2>
+        <button id="close-add-modal-btn" class="icon-btn" type="button" aria-label="Закрыть">✕</button>
+      </div>
+      <form id="add-product-form" class="modal-form">
+        <label class="field">
+          <span>Название</span>
+          <input id="prod-name" type="text" placeholder="Например, Раф Цитрус" required />
+        </label>
+        <label class="field">
+          <span>Категория</span>
+          <select id="prod-category" required></select>
+        </label>
+        <label class="field">
+          <span>Цена (₸)</span>
+          <input id="prod-price" type="number" min="0" step="10" placeholder="1850" required />
+        </label>
+        <label class="field">
+          <span>Описание вкуса</span>
+          <textarea id="prod-description" rows="3" placeholder="Краткое описание напитка или десерта"></textarea>
+        </label>
+        <label class="field">
+          <span>Ссылка на фото (необязательно)</span>
+          <input id="prod-image" type="url" placeholder="https://..." />
+        </label>
+        <button type="submit" class="primary-btn">Сохранить товар</button>
+        <p id="add-product-status" class="status-msg"></p>
+      </form>
+    </div>
+  </div>
+
+  <!-- Модальное окно истории заказов -->
+  <div id="orders-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="orders-modal-title">
+    <div class="modal-card modal-card-wide">
+      <div class="modal-header">
+        <h2 id="orders-modal-title">Оформленные заказы</h2>
+        <button id="close-orders-modal-btn" class="icon-btn" type="button" aria-label="Закрыть">✕</button>
+      </div>
+      <div id="orders-list" class="orders-list"></div>
+    </div>
+  </div>
+
+  <!-- Выдвижная корзина -->
+  <aside id="cart-drawer" class="cart-drawer hidden" aria-label="Корзина">
+    <div class="cart-panel">
+      <div class="cart-header">
+        <h2>Ваш заказ</h2>
+        <button id="close-cart-btn" class="icon-btn" type="button" aria-label="Закрыть">✕</button>
+      </div>
+      <div id="cart-items" class="cart-items"></div>
+      <div class="cart-footer">
+        <div class="cart-total">
+          <span>Итого:</span>
+          <strong id="cart-total">0 ₸</strong>
+        </div>
+        <form id="order-form" class="order-form">
+          <input id="customer-name" type="text" placeholder="Ваше имя" required />
+          <input id="customer-phone" type="tel" placeholder="Телефон (+7 ...)" required />
+          <input id="order-comment" type="text" placeholder="Комментарий к заказу (необязательно)" />
+          <button type="submit" class="primary-btn">Оформить заказ</button>
+        </form>
+        <p id="order-status" class="status-msg"></p>
+      </div>
+    </div>
+  </aside>
+
+  <script src="/app.js"></script>
+</body>
+</html>
